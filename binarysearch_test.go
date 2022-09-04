@@ -42,7 +42,7 @@ func newNeverCallEvaluatorf(t *testing.T, format string, a ...interface{}) Evalu
 	}
 }
 
-func TestHigherOrHitNaively(t *testing.T) {
+func TestTooLowOrHitNaively(t *testing.T) {
 	for _, tc := range []struct {
 		target   int
 		ints     []int
@@ -60,7 +60,7 @@ func TestHigherOrHitNaively(t *testing.T) {
 		{5, []int{2, 3, 4, 5, 5, 5, 6, 7}, 3},
 		{5, []int{2, 3, 5, 5, 5, 6, 7}, 2},
 	} {
-		result := HigherOrHit(0, len(tc.ints), -1, func(i int) Evaluation {
+		result := TooLowOrHit(0, len(tc.ints), -1, func(i int) Evaluation {
 			if tc.ints[i] > tc.target {
 				return TooHigh
 			}
@@ -73,20 +73,20 @@ func TestHigherOrHitNaively(t *testing.T) {
 	}
 }
 
-func TestHigherOrHitExtensively(t *testing.T) {
+func TestTooLowOrHitExtensively(t *testing.T) {
 	// size <= 0
 	for first := -3; first <= 3; first++ {
 		for size := 0; size >= -3; size-- {
-			assert.Equal(t, -12, HigherOrHit(first, size, -12, newNeverCallEvaluatorf(t, "the evaluator should never be called if the size is 0 (first = %d)", first)))
+			assert.Equal(t, -12, TooLowOrHit(first, size, -12, newNeverCallEvaluatorf(t, "the evaluator should never be called if the size is 0 (first = %d)", first)))
 		}
 	}
 
 	// for all indexes, the evaluator returns the same Evaluation
 	for size := 1; size < 8; size++ {
 		for first := -3; first <= 3; first++ {
-			assert.Equal(t, -12, HigherOrHit(first, size, -12, newDummyEvaluator(TooHigh, t, first, size)))
-			assert.Equal(t, first+size-1, HigherOrHit(first, size, -12, newDummyEvaluator(TooLow, t, first, size)))
-			assert.Equal(t, first, HigherOrHit(first, size, -12, newDummyEvaluator(Hit, t, first, size)))
+			assert.Equal(t, -12, TooLowOrHit(first, size, -12, newDummyEvaluator(TooHigh, t, first, size)))
+			assert.Equal(t, first+size-1, TooLowOrHit(first, size, -12, newDummyEvaluator(TooLow, t, first, size)))
+			assert.Equal(t, first, TooLowOrHit(first, size, -12, newDummyEvaluator(Hit, t, first, size)))
 		}
 	}
 
@@ -96,7 +96,7 @@ func TestHigherOrHitExtensively(t *testing.T) {
 			size := tooLow + tooHigh
 			for first := -3; first <= 3; first++ {
 				e := newEvaluator(tooLow+1, tooLow, t, first, size)
-				assert.Equal(t, first+tooLow, HigherOrHit(first, size, -12, e))
+				assert.Equal(t, first+tooLow, TooLowOrHit(first, size, -12, e))
 			}
 		}
 	}
@@ -108,7 +108,7 @@ func TestHigherOrHitExtensively(t *testing.T) {
 				size := tooLow + matches + tooHigh
 				for first := -3; first <= 3; first++ {
 					e := newEvaluator(tooLow, tooLow+matches, t, first, size)
-					assert.Equal(t, first+tooLow, HigherOrHit(first, size, -12, e))
+					assert.Equal(t, first+tooLow, TooLowOrHit(first, size, -12, e))
 				}
 			}
 		}

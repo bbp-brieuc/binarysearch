@@ -1,6 +1,6 @@
 // Package binarysearch provides binary search functionality.
 // Example use, assuming sortedFloats is a []float64 sorted smallest first:
-// i := binarysearch.HigherOrHit(0, len(sortedFloats), -1, func(index int) binarysearch.Evaluation {
+// i := binarysearch.TooLowOrHit(0, len(sortedFloats), -1, func(index int) binarysearch.Evaluation {
 //     x := sortedFloats[index]
 //     if x > 5.5 { return binarysearch.TooHigh }
 //     if x < 5.5 { return binarysearch.TooLow }
@@ -25,12 +25,12 @@ const (
 // Its result controls which half of the indexes search space will be explored next.
 type Evaluator func(index int) Evaluation
 
-// HigherOrHit executes a binary search using indexes in range [first, first+size-1).
+// TooLowOrHit executes a binary search using indexes in range [first, first+size-1).
 // If some of the indexes are exact matches (ie. the Evaluator returns Hit), it returns the lowest of those indexes.
 // Otherwise, it returns the highest of the indexes for which the Evaluator returns TooLow, if there's at least one of these.
 // Otherwise, it returns its missIndex argument.
 // If size is negative or 0, it returns missIndex.
-func HigherOrHit(first, size, missIndex int, evaluator Evaluator) int {
+func TooLowOrHit(first, size, missIndex int, evaluator Evaluator) int {
 	if size <= 1 {
 		if size <= 0 || evaluator(first) == TooHigh {
 			return missIndex
