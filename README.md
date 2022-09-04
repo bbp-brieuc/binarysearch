@@ -1,4 +1,4 @@
-# gobinsearch
+# binarysearch
 Generic binary search module for golang.
 
 It can search any index space, it doesn't have to be a slice.
