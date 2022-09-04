@@ -52,7 +52,7 @@ func TooLowOrHit(first, size, missIndex int, evaluator Evaluator) int {
 			a = i
 		case TooHigh:
 			if i-a <= 1 {
-				if a <= first && evaluator(first) == TooHigh {
+				if a <= first && a < i && evaluator(first) == TooHigh {
 					return missIndex
 				}
 				return a
