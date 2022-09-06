@@ -1,14 +1,14 @@
 // Package binarysearch provides binary search functionality.
 // Example use, assuming sortedFloats is a []float64 sorted smallest first:
-// i := binarysearch.TooLowOrHit(0, len(sortedFloats), -1, func(index int) binarysearch.Evaluation {
-//     x := sortedFloats[index]
-//     if x > 5.5 { return binarysearch.TooHigh }
-//     if x < 5.5 { return binarysearch.TooLow }
-//     return binarysearch.Hit
-// })
-// if i == -1 { fmt.Println("all floats are > 5.5") }
-// else if sortedFloats[i] < 5.5 { fmt.Println("no float is 5.5 and the largest index of a float < 5.5 is", i) }
-// else { fmt.Println("the lowest index of a float equal to 5.5 is", i) }
+//   i := binarysearch.TooLowOrHit(0, len(sortedFloats), -1, func(index int) binarysearch.Evaluation {
+//       x := sortedFloats[index]
+//       if x > 5.5 { return binarysearch.TooHigh }
+//       if x < 5.5 { return binarysearch.TooLow }
+//       return binarysearch.Hit
+//   })
+//   if i == -1 { fmt.Println("no float is <= 5.5") }
+//   else if sortedFloats[i] < 5.5 { fmt.Println("no float is 5.5 and the highest index of a float < 5.5 is", i) }
+//   else { fmt.Println("the lowest index of a float equal to 5.5 is", i) }
 package binarysearch
 
 // Evaluation indicates whether an index is too low given the target, too high, or is a hit.
