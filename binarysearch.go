@@ -1,4 +1,4 @@
-// Package binarysearch provides binary search functionality.
+// Package binarysearch provides a generic binary search of anything: it doesn't need to be in a slice, and it can search anything, not just predefined types.
 // Example use, assuming sortedFloats is a []float64 sorted smallest first:
 //   i := binarysearch.TooLowOrHit(0, len(sortedFloats), -1, func(index int) binarysearch.Evaluation {
 //       x := sortedFloats[index]
